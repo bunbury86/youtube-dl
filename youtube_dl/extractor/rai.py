@@ -265,12 +265,12 @@ class RaiPlayPlaylistIE(InfoExtractor):
         title = media['name']
         description = media['program_info']['description']
 
-        content_sets = [s['id'] for b in media['blocks'] for s in b['sets']]
+        content_sets = [s['path_id'] for b in media['blocks'] for s in b['sets']]
 
         entries = []
         for cs in content_sets:
             medias = self._download_json(
-                '%s/%s.json' % (urljoin(RaiBaseIE._BASE_URL, 'programmi/' + playlist_id), cs),
+                urljoin(RaiBaseIE._BASE_URL, cs),
                 cs, 'Downloading content set JSON')
             for m in medias['items']:
                 video_url = urljoin(url, m['path_id'])
